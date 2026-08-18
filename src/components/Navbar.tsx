@@ -22,10 +22,10 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-gray-200 bg-white shadow-sm">
+    <header className="border-b border-gray-200 bg-surface shadow-sm">
       <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-3">
-          <div className="text-xl font-bold leading-tight text-[#174D36]">
+          <div className="text-xl font-bold leading-tight text-primary">
             <p>BSE27-2</p>
           </div>
         </Link>
@@ -40,8 +40,8 @@ export default function Navbar() {
                 href={item.href}
                 className={`flex h-full items-center border-b-4 px-1 text-base font-medium transition-colors ${
                   isActive
-                    ? "border-[#6CBE45] text-[#6CBE45]"
-                    : "border-transparent text-[#1F2937] hover:text-[#174D36]"
+                    ? "border-accent text-accent"
+                    : "border-transparent text-foreground hover:text-primary"
                 }`}
               >
                 {item.name}
@@ -53,10 +53,10 @@ export default function Navbar() {
           <div className="group relative flex h-full items-center">
             <Link
               href="/team"
-              className={`flex h-full items-center gap-2 border-b-4 px-1 text-base font-medium ${
+              className={`flex h-full items-center gap-2 border-b-4 px-1 text-base font-medium transition-colors ${
                 pathname.startsWith("/team")
-                  ? "border-[#6CBE45] text-[#6CBE45]"
-                  : "border-transparent text-[#1F2937] hover:text-[#174D36]"
+                  ? "border-accent text-accent"
+                  : "border-transparent text-foreground hover:text-primary"
               }`}
             >
               Team
@@ -67,17 +67,18 @@ export default function Navbar() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
+                aria-hidden="true"
               >
                 <path d="m5 7.5 5 5 5-5" />
               </svg>
             </Link>
 
-            <div className="invisible absolute right-0 top-full z-50 w-60 translate-y-2 rounded-lg border border-gray-200 bg-white py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+            <div className="invisible absolute right-0 top-full z-50 w-60 translate-y-2 rounded-lg border border-gray-200 bg-surface py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
               {teamMembers.map((member) => (
                 <Link
                   key={member.name}
                   href={member.href}
-                  className="block px-5 py-3 text-sm text-[#1F2937] hover:bg-[#F4F7F2] hover:text-[#174D36]"
+                  className="block px-5 py-3 text-sm text-foreground transition-colors hover:bg-background hover:text-primary"
                 >
                   {member.name}
                 </Link>
