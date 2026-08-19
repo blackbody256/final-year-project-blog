@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 const slides = [
@@ -73,42 +74,42 @@ export default function FailureCarousel() {
       </div>
 
       {/* Controls */}
-      <div className="flex items-center justify-between border-t border-border px-6 py-4">
-        <button
-          type="button"
-          onClick={showPreviousSlide}
-          className="rounded-lg border border-border px-4 py-2 font-medium text-primary transition hover:bg-background"
-          aria-label="Show previous slide"
-        >
-          ← Previous
-        </button>
-
-        <div className="flex gap-2">
-          {slides.map((item, index) => (
+        <div className="flex items-center justify-between border-t border-border px-6 py-4">
             <button
-              key={item.number}
-              type="button"
-              onClick={() => setCurrentSlide(index)}
-              aria-label={`Show slide ${index + 1}`}
-              aria-current={currentSlide === index}
-              className={`h-2.5 rounded-full transition-all ${
-                currentSlide === index
-                  ? "w-8 bg-accent"
-                  : "w-2.5 bg-border hover:bg-muted"
-              }`}
-            />
-          ))}
-        </div>
+                type="button"
+                onClick={showPreviousSlide}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-primary transition hover:border-accent hover:bg-background hover:text-accent"
+                aria-label="Show previous slide"
+            >
+                <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
+            </button>
 
-        <button
-          type="button"
-          onClick={showNextSlide}
-          className="rounded-lg border border-border px-4 py-2 font-medium text-primary transition hover:bg-background"
-          aria-label="Show next slide"
-        >
-          Next →
-        </button>
-      </div>
+            <div className="flex gap-2">
+                {slides.map((item, index) => (
+                <button
+                    key={item.number}
+                    type="button"
+                    onClick={() => setCurrentSlide(index)}
+                    aria-label={`Show slide ${index + 1}`}
+                    aria-current={currentSlide === index}
+                    className={`h-2.5 rounded-full transition-all ${
+                    currentSlide === index
+                        ? "w-8 bg-accent"
+                        : "w-2.5 bg-border hover:bg-muted"
+                    }`}
+                />
+                ))}
+            </div>
+
+            <button
+                type="button"
+                onClick={showNextSlide}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-primary transition hover:border-accent hover:bg-background hover:text-accent"
+                aria-label="Show next slide"
+            >
+                <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
+            </button>
+            </div>
     </div>
   );
 }
