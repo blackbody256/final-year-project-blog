@@ -30,7 +30,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-surface shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-black/5 bg-white/60 shadow-sm backdrop-blur-2xl backdrop-saturate-150">
       <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6">
         {/* Project name */}
         <Link
@@ -87,7 +87,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop dropdown */}
-            <div className="invisible absolute right-0 top-full w-64 translate-y-2 rounded-lg border border-border bg-surface py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+            <div className="invisible absolute right-0 top-full z-50 w-60 translate-y-2 rounded-2xl border border-accent/15 bg-surface/90 py-2 opacity-0 shadow-[0_15px_40px_rgba(23,77,54,0.15)] backdrop-blur-xl transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
               {teamMembers.map((member) => {
                 const isActive = pathname === member.href;
 

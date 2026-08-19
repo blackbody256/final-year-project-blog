@@ -356,11 +356,7 @@ export default function Home() {
 
               <p className="mt-3 leading-7 text-muted">{step.description}</p>
 
-              {index < problemSteps.length - 1 && (
-                <span className="absolute -right-4 top-1/2 z-10 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border bg-surface text-accent lg:flex">
-                  <ChevronRightIcon />
-                </span>
-              )}
+              
             </article>
           ))}
         </div>
