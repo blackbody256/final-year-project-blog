@@ -12,16 +12,10 @@ const navigation = [
 
 const teamMembers = [
   { name: "All Team Members", href: "/team" },
+  { name: "Andrew Akanga", href: "/team/andrew-akanga" },
+  { name: "Ann Treasure Karagwa", href: "/team/ann-treasure-karagwa"},
   { name: "Mable Tusiime", href: "/team/mable-tusiime" },
-  {
-    name: "Ann Treasure Karagwa",
-    href: "/team/ann-treasure-karagwa",
-  },
-  {
-    name: "Selina Wanyana Masembe",
-    href: "/team/selina-wanyana-masembe",
-  },
-  { name: "Member 4", href: "/team/member-4" },
+  { name: "Selina Wanyana Masembe", href: "/team/selina-wanyana-masembe"},
 ];
 
 export default function Navbar() {
