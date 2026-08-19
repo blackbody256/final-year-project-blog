@@ -12,10 +12,16 @@ const navigation = [
 
 const teamMembers = [
   { name: "All Team Members", href: "/team" },
-  { name: "Andrew Akanga", href: "/team/andrew-akanga" },
-  { name: "Ann Treasure Karagwa", href: "/team/ann-treasure-karagwa" },
   { name: "Mable Tusiime", href: "/team/mable-tusiime" },
-  { name: "Selina Wanyana Masembe", href: "/team/selina-wanyana-masembe" },
+  {
+    name: "Ann Treasure Karagwa",
+    href: "/team/ann-treasure-karagwa",
+  },
+  {
+    name: "Selina Wanyana Masembe",
+    href: "/team/selina-wanyana-masembe",
+  },
+  { name: "Member 4", href: "/team/member-4" },
 ];
 
 export default function Navbar() {
@@ -30,12 +36,12 @@ export default function Navbar() {
   }
 
   return (
-    <header className="relative z-50 border-b border-gray-200 bg-surface shadow-sm">
+    <header className="relative z-50 border-b border-border bg-surface shadow-sm">
       <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6">
         {/* Project name */}
         <Link
           href="/"
-          className="text-xl font-bold leading-tight text-primary"
+          className="text-xl font-bold text-primary"
           onClick={closeMobileMenu}
         >
           BSE27-2
@@ -50,6 +56,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
+                aria-current={isActive ? "page" : undefined}
                 className={`flex h-full items-center border-b-4 px-1 text-base font-medium transition-colors ${
                   isActive
                     ? "border-accent text-accent"
@@ -85,21 +92,31 @@ export default function Navbar() {
               </svg>
             </Link>
 
-            <div className="invisible absolute right-0 top-full w-60 translate-y-2 rounded-lg border border-gray-200 bg-surface py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-              {teamMembers.map((member) => (
-                <Link
-                  key={member.name}
-                  href={member.href}
-                  className="block px-5 py-3 text-sm text-foreground transition-colors hover:bg-background hover:text-primary"
-                >
-                  {member.name}
-                </Link>
-              ))}
+            {/* Desktop dropdown */}
+            <div className="invisible absolute right-0 top-full w-64 translate-y-2 rounded-lg border border-border bg-surface py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+              {teamMembers.map((member) => {
+                const isActive = pathname === member.href;
+
+                return (
+                  <Link
+                    key={member.name}
+                    href={member.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`block border-l-4 px-5 py-3 text-sm transition-colors ${
+                      isActive
+                        ? "border-accent bg-background font-semibold text-accent"
+                        : "border-transparent text-foreground hover:bg-background hover:text-primary"
+                    }`}
+                  >
+                    {member.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
 
-        {/* Mobile hamburger button */}
+        {/* Mobile menu button */}
         <button
           type="button"
           className="flex items-center justify-center text-foreground md:hidden"
@@ -108,24 +125,24 @@ export default function Navbar() {
           aria-expanded={mobileMenuOpen}
         >
           {mobileMenuOpen ? (
-            // Close icon
             <svg
               className="h-7 w-7"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
+              aria-hidden="true"
             >
               <path d="M6 6l12 12M18 6 6 18" />
             </svg>
           ) : (
-            // Hamburger icon
             <svg
               className="h-7 w-7"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
+              aria-hidden="true"
             >
               <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -135,7 +152,7 @@ export default function Navbar() {
 
       {/* Mobile navigation */}
       {mobileMenuOpen && (
-        <div className="absolute left-0 top-full w-full border-t border-gray-200 bg-surface px-6 py-4 shadow-lg md:hidden">
+        <div className="absolute left-0 top-full w-full border-t border-border bg-surface px-6 py-4 shadow-lg md:hidden">
           <div className="flex flex-col">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
@@ -145,6 +162,7 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   onClick={closeMobileMenu}
+                  aria-current={isActive ? "page" : undefined}
                   className={`border-l-4 px-4 py-3 font-medium transition-colors ${
                     isActive
                       ? "border-accent bg-background text-accent"
@@ -156,11 +174,11 @@ export default function Navbar() {
               );
             })}
 
-            {/* Mobile Team dropdown button */}
+            {/* Mobile Team button */}
             <button
               type="button"
               onClick={() => setMobileTeamOpen((current) => !current)}
-              className={`flex items-center justify-between border-l-4 px-4 py-3 text-left font-medium ${
+              className={`flex items-center justify-between border-l-4 px-4 py-3 text-left font-medium transition-colors ${
                 pathname.startsWith("/team")
                   ? "border-accent bg-background text-accent"
                   : "border-transparent text-foreground hover:bg-background hover:text-primary"
@@ -177,24 +195,34 @@ export default function Navbar() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
+                aria-hidden="true"
               >
                 <path d="m5 7.5 5 5 5-5" />
               </svg>
             </button>
 
-            {/* Mobile Team members */}
+            {/* Mobile Team links */}
             {mobileTeamOpen && (
-              <div className="ml-4 border-l border-gray-200">
-                {teamMembers.map((member) => (
-                  <Link
-                    key={member.name}
-                    href={member.href}
-                    onClick={closeMobileMenu}
-                    className="block px-5 py-3 text-sm text-foreground hover:bg-background hover:text-primary"
-                  >
-                    {member.name}
-                  </Link>
-                ))}
+              <div className="ml-4 border-l border-border">
+                {teamMembers.map((member) => {
+                  const isActive = pathname === member.href;
+
+                  return (
+                    <Link
+                      key={member.name}
+                      href={member.href}
+                      onClick={closeMobileMenu}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`block border-l-4 px-5 py-3 text-sm transition-colors ${
+                        isActive
+                          ? "border-accent bg-background font-semibold text-accent"
+                          : "border-transparent text-foreground hover:bg-background hover:text-primary"
+                      }`}
+                    >
+                      {member.name}
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>
