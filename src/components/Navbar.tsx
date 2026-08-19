@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { teamMembers as team } from "@/data/team";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -12,10 +13,10 @@ const navigation = [
 
 const teamMembers = [
   { name: "All Team Members", href: "/team" },
-  { name: "Andrew Akanga", href: "/team/andrew-akanga" },
-  { name: "Ann Treasure Karagwa", href: "/team/ann-treasure-karagwa"},
-  { name: "Mable Tusiime", href: "/team/mable-tusiime" },
-  { name: "Selina Wanyana Masembe", href: "/team/selina-wanyana-masembe"},
+  ...team.map((member) => ({
+    name: member.name,
+    href: `/team/${member.slug}`,
+  })),
 ];
 
 export default function Navbar() {

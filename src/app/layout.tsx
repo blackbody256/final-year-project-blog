@@ -15,9 +15,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Update once the Vercel domain is known — required for LinkedIn and other
+// link previews to resolve the Open Graph image to an absolute URL.
+const siteUrl = "https://bse27-2.vercel.app";
+
 export const metadata: Metadata = {
-  title: "BSE27-2",
-  description: "Final Year Project Blog for BSE27-2",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "BSE27-2",
+    template: "%s | BSE27-2",
+  },
+  description:
+    "Final-year Software Engineering project at Makerere University: a diagnosis system for electric-bus charging infrastructure.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
