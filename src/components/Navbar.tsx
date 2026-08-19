@@ -6,9 +6,8 @@ import { useState } from "react";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
   { name: "Progress", href: "/progress" },
-  { name: "Documents", href: "/documents" },
+  { name: "Gallery", href: "/gallery" },
 ];
 
 const teamMembers = [
