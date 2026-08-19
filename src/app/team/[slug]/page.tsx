@@ -1,28 +1,28 @@
 import { notFound } from "next/navigation";
 
 const teamMembers = {
+  "andrew-akanga": {
+    name: "Andrew Akanga",
+    role: "Team Member",
+    description: "Add Andrew's biography and project responsibilities here.",
+  },
+
+  "ann-treasure-karagwa": {
+    name: "Ann Treasure Karagwa",
+    role: "Team Member",
+    description: "Add Ann Treasure's biography and project responsibilities here.",
+  },
+
   "mable-tusiime": {
     name: "Mable Tusiime",
     role: "Team Member",
     description: "Add Mable's biography and project responsibilities here.",
   },
 
-  "member-2": {
-    name: "Member 2",
+  "selina-wanyana-masembe": {
+    name: "Selina Wanyana Masembe",
     role: "Team Member",
-    description: "Add this member's biography and responsibilities here.",
-  },
-
-  "member-3": {
-    name: "Member 3",
-    role: "Team Member",
-    description: "Add this member's biography and responsibilities here.",
-  },
-
-  "member-4": {
-    name: "Member 4",
-    role: "Team Member",
-    description: "Add this member's biography and responsibilities here.",
+    description: "Add Selina's biography and project responsibilities here.",
   },
 };
 
