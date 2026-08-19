@@ -18,10 +18,10 @@ export type GalleryCollection = {
 export const galleryCollections: GalleryCollection[] = [
   {
     slug: "c6-180kw-charger",
-    title: "Commissioning a C6 180 kW charger",
+    title: "Testing a C6 180 kW charger",
     eyebrow: "Kiira Motors Corporation",
     caption:
-      "A KMC C6 180 kW DC fast charger, from delivery to commissioning. It arrives shrink-wrapped on a pallet, is unwrapped and positioned, then connected to the grid through the distribution board beside it and tested by charging a bus. Every unit that later reports a fault starts here, and knowing how one is put together is what makes its logs readable afterwards.",
+      "A KMC C6 180 kW DC fast charger, from delivery to initial testing. It arrives shrink-wrapped on a pallet, is unwrapped and positioned, then connected to the grid through the distribution board beside it and tested by charging a bus. Every unit that later reports a fault starts here, and knowing how one is put together is what makes its logs readable afterwards.",
     images: [
       {
         src: "/gallery/c6-180kw-charger/01.jpeg",
@@ -70,25 +70,25 @@ export const galleryCollections: GalleryCollection[] = [
     images: [
       {
         src: "/gallery/a8-board-swap/01.jpeg",
-        alt: "A technician in a hi-vis vest and KMC hard hat working at an open AC distribution panel, with a charger cabinet open alongside showing its power modules and twin cooling fans.",
+        alt: "Andrew switching of the feeder pillar  so that he can diagnose the charger",
         width: 768,
         height: 1020,
       },
       {
         src: "/gallery/a8-board-swap/02.jpeg",
-        alt: "An arm reaching into the opened charger cabinet with a screwdriver, the green control board visible at the top above a stack of power modules.",
+        alt: "The old faulty A8 board is removed",
         width: 432,
         height: 984,
       },
       {
         src: "/gallery/a8-board-swap/03.jpeg",
-        alt: "Both hands working on a connector at the top of the open cabinet, disconnecting wiring from the control board.",
+        alt: "A new A8 board is being wired and connected.",
         width: 432,
         height: 984,
       },
       {
         src: "/gallery/a8-board-swap/04.jpeg",
-        alt: "A technician in a hi-vis vest and yellow hard hat reaching up into the cabinet to work on the control board.",
+        alt: "The new A8 board is screwed back for testing.",
         width: 432,
         height: 984,
       },

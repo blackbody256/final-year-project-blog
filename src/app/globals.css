@@ -10,6 +10,17 @@
   --surface: #ffffff;
   --border: #cfe2ca;
   --muted: #60705f;
+
+  /* --accent is a fill colour: at 2.1:1 on a light surface it is not legible
+     as text. Use --accent-text wherever the accent green carries words. */
+  --accent-text: #276b32;
+
+  /* Filled bands keep the same dark green in both themes, like the hero and
+     the footer. --primary flips lightness between themes, so text sitting on
+     it cannot be a fixed colour. */
+  --primary-solid: #1c4d26;
+  --primary-on: #f4f9f1;
+  --accent-on-solid: #91dc7a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +34,13 @@
     --surface: #172219;
     --border: #304832;
     --muted: #afc0ad;
+
+    /* On a dark surface the accent green is already legible, so it doubles as
+       the text colour here. The band tokens stay fixed across themes. */
+    --accent-text: #63c342;
+    --primary-solid: #1c4d26;
+    --primary-on: #f4f9f1;
+    --accent-on-solid: #91dc7a;
   }
 }
 
@@ -32,6 +50,10 @@
   --color-primary: var(--primary);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-text: var(--accent-text);
+  --color-primary-solid: var(--primary-solid);
+  --color-primary-on: var(--primary-on);
+  --color-accent-on-solid: var(--accent-on-solid);
   --color-surface: var(--surface);
   --color-border: var(--border);
   --color-muted: var(--muted);
@@ -40,7 +62,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
   transition:
     background-color 200ms ease,
     color 200ms ease;

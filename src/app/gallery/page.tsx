@@ -18,7 +18,7 @@ export default function GalleryPage() {
       </noscript>
 
       <div className="mx-auto max-w-7xl">
-        <p className="font-medium text-accent">Field work</p>
+        <p className="font-medium text-accent-text">Field work</p>
 
         <h1 className="mt-2 text-4xl font-bold text-primary">Gallery</h1>
 
@@ -36,7 +36,7 @@ export default function GalleryPage() {
               <li key={collection.slug}>
                 <a
                   href={`#${collection.slug}`}
-                  className="inline-block rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
+                  className="inline-block rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent-text"
                 >
                   {collection.title}
                 </a>

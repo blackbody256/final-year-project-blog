@@ -142,7 +142,7 @@ export default function GalleryCollectionSection({
 
   return (
     <section className="scroll-mt-24" id={collection.slug}>
-      <p className="font-semibold uppercase tracking-wider text-accent">
+      <p className="font-semibold uppercase tracking-wider text-accent-text">
         {collection.eyebrow}
       </p>
 
@@ -236,7 +236,7 @@ export default function GalleryCollectionSection({
                 width={openImage.width}
                 height={openImage.height}
                 sizes="(min-width: 640px) 60vw, 90vw"
-                className="lightbox-image max-h-[70dvh] w-auto max-w-full rounded-xl object-contain shadow-2xl"
+                className="lightbox-image max-h-[70dvh] w-auto max-w-full rounded-2xl object-contain shadow-2xl"
               />
 
               {imageCount > 1 && (

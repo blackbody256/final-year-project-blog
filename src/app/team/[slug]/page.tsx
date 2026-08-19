@@ -66,7 +66,7 @@ export default async function TeamMemberPage({
       <div className="mx-auto max-w-3xl">
         <Link
           href="/team"
-          className="text-sm font-medium text-accent hover:text-primary"
+          className="text-sm font-medium text-accent-text hover:text-primary"
         >
           &larr; Meet the Team
         </Link>
@@ -80,7 +80,7 @@ export default async function TeamMemberPage({
             </h1>
 
             {member.role && (
-              <p className="mt-2 font-medium text-accent">{member.role}</p>
+              <p className="mt-2 font-medium text-accent-text">{member.role}</p>
             )}
           </div>
         </div>
@@ -107,7 +107,7 @@ export default async function TeamMemberPage({
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
+                className="rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent-text"
               >
                 {link.label}
               </a>

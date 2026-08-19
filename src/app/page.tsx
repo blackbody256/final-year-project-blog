@@ -323,7 +323,7 @@ export default function Home() {
       {/* Problem */}
       <section id="the-problem" className="scroll-mt-24 px-6 py-24">
         <div className="mx-auto max-w-5xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-accent">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-accent-text">
             The problem
           </p>
 
@@ -344,7 +344,7 @@ export default function Home() {
           {problemSteps.map((step, index) => (
             <article
               key={step.number}
-              className="relative rounded-3xl border bg-surface p-7 shadow-sm"
+              className="relative rounded-2xl border border-border bg-surface p-7 shadow-sm"
             >
               <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent font-bold text-[#07150e]">
                 {step.number}
@@ -371,62 +371,62 @@ export default function Home() {
 
       {/* Example */}
       <section className="px-6 py-24">
-        <div className="mx-auto max-w-6xl rounded-[2rem] bg-primary px-6 py-14 text-center text-white sm:px-12">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-accent">
+        <div className="mx-auto max-w-6xl rounded-3xl bg-primary-solid px-6 py-14 text-primary-on sm:px-12">
+          <p className="text-center text-sm font-semibold uppercase tracking-[0.22em] text-accent-on-solid">
             A simple example
           </p>
 
-          <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-bold sm:text-4xl">
+          <h2 className="mx-auto mt-4 max-w-3xl text-center text-3xl font-bold sm:text-4xl">
             The system should find where the failure began.
           </h2>
 
           <div className="mt-12 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
             <div className="rounded-2xl bg-white/10 p-6">
-              <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-accent font-bold text-[#07150e]">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent font-bold text-[#07150e]">
                 1
               </span>
 
               <h3 className="mt-4 font-bold">Cooling fan stops</h3>
 
-              <p className="mt-2 text-sm leading-6 text-white/70">
+              <p className="mt-2 text-sm leading-6 text-primary-on/80">
                 Cooling inside the charger is reduced.
               </p>
             </div>
 
-            <span className="mx-auto hidden text-accent md:block">
+            <span className="mx-auto hidden text-accent-on-solid md:block">
               <ChevronRightIcon />
             </span>
 
             <div className="rounded-2xl bg-white/10 p-6">
-              <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-accent font-bold text-[#07150e]">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent font-bold text-[#07150e]">
                 2
               </span>
 
               <h3 className="mt-4 font-bold">Temperature rises</h3>
 
-              <p className="mt-2 text-sm leading-6 text-white/70">
+              <p className="mt-2 text-sm leading-6 text-primary-on/80">
                 The power module begins to overheat.
               </p>
             </div>
 
-            <span className="mx-auto hidden text-accent md:block">
+            <span className="mx-auto hidden text-accent-on-solid md:block">
               <ChevronRightIcon />
             </span>
 
             <div className="rounded-2xl bg-white/10 p-6">
-              <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-accent font-bold text-[#07150e]">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent font-bold text-[#07150e]">
                 3
               </span>
 
               <h3 className="mt-4 font-bold">A warning appears</h3>
 
-              <p className="mt-2 text-sm leading-6 text-white/70">
+              <p className="mt-2 text-sm leading-6 text-primary-on/80">
                 A connector overheating fault is reported.
               </p>
             </div>
           </div>
 
-          <p className="mx-auto mt-8 max-w-3xl rounded-2xl bg-white px-6 py-4 font-semibold text-primary">
+          <p className="mx-auto mt-8 max-w-3xl rounded-2xl bg-primary-on px-6 py-4 font-semibold text-primary-solid">
             The connector warning is the final symptom. The stopped cooling fan
             is the possible root cause.
           </p>
@@ -437,7 +437,7 @@ export default function Home() {
       <section className="bg-surface px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-accent">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-accent-text">
               Our solution
             </p>
 
@@ -455,9 +455,9 @@ export default function Home() {
             {solutionSteps.map((step) => (
               <article
                 key={step.title}
-                className="rounded-3xl border bg-background p-7"
+                className="rounded-2xl border border-border bg-background p-7"
               >
-                <span className="text-sm font-bold text-accent">
+                <span className="text-sm font-bold text-accent-text">
                   {step.number}
                 </span>
 
@@ -478,7 +478,7 @@ export default function Home() {
           <div className="mt-10 text-center">
             <Link
               href="/team"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 font-semibold text-white transition hover:bg-accent hover:text-[#07150e]"
+              className="inline-flex items-center gap-2 rounded-full bg-primary-solid px-7 py-3.5 font-semibold text-primary-on transition hover:bg-accent hover:text-[#07150e]"
             >
               View the team
               <ChevronRightIcon />

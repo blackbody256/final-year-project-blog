@@ -31,7 +31,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/5 bg-white/60 shadow-sm backdrop-blur-2xl backdrop-saturate-150">
+    <header className="sticky top-0 z-50 border-b border-border bg-surface/70 shadow-sm backdrop-blur-2xl backdrop-saturate-150">
       <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6">
         {/* Project name */}
         <Link
@@ -54,7 +54,7 @@ export default function Navbar() {
                 aria-current={isActive ? "page" : undefined}
                 className={`flex h-full items-center border-b-4 px-1 text-base font-medium transition-colors ${
                   isActive
-                    ? "border-accent text-accent"
+                    ? "border-accent text-accent-text"
                     : "border-transparent text-foreground hover:text-primary"
                 }`}
               >
@@ -69,7 +69,7 @@ export default function Navbar() {
               href="/team"
               className={`flex h-full items-center gap-2 border-b-4 px-1 text-base font-medium transition-colors ${
                 pathname.startsWith("/team")
-                  ? "border-accent text-accent"
+                  ? "border-accent text-accent-text"
                   : "border-transparent text-foreground hover:text-primary"
               }`}
             >
@@ -99,7 +99,7 @@ export default function Navbar() {
                     aria-current={isActive ? "page" : undefined}
                     className={`block border-l-4 px-5 py-3 text-sm transition-colors ${
                       isActive
-                        ? "border-accent bg-background font-semibold text-accent"
+                        ? "border-accent bg-background font-semibold text-accent-text"
                         : "border-transparent text-foreground hover:bg-background hover:text-primary"
                     }`}
                   >
@@ -160,7 +160,7 @@ export default function Navbar() {
                   aria-current={isActive ? "page" : undefined}
                   className={`border-l-4 px-4 py-3 font-medium transition-colors ${
                     isActive
-                      ? "border-accent bg-background text-accent"
+                      ? "border-accent bg-background text-accent-text"
                       : "border-transparent text-foreground hover:bg-background hover:text-primary"
                   }`}
                 >
@@ -175,7 +175,7 @@ export default function Navbar() {
               onClick={() => setMobileTeamOpen((current) => !current)}
               className={`flex items-center justify-between border-l-4 px-4 py-3 text-left font-medium transition-colors ${
                 pathname.startsWith("/team")
-                  ? "border-accent bg-background text-accent"
+                  ? "border-accent bg-background text-accent-text"
                   : "border-transparent text-foreground hover:bg-background hover:text-primary"
               }`}
               aria-expanded={mobileTeamOpen}
@@ -210,7 +210,7 @@ export default function Navbar() {
                       aria-current={isActive ? "page" : undefined}
                       className={`block border-l-4 px-5 py-3 text-sm transition-colors ${
                         isActive
-                          ? "border-accent bg-background font-semibold text-accent"
+                          ? "border-accent bg-background font-semibold text-accent-text"
                           : "border-transparent text-foreground hover:bg-background hover:text-primary"
                       }`}
                     >

@@ -13,7 +13,7 @@ export default function TeamPage() {
   return (
     <main className="px-6 py-16">
       <div className="mx-auto max-w-7xl">
-        <p className="font-medium text-accent">BSE27-2</p>
+        <p className="font-medium text-accent-text">BSE27-2</p>
 
         <h1 className="mt-2 text-4xl font-bold text-primary">
           Project Team
@@ -42,7 +42,7 @@ export default function TeamPage() {
                 </h2>
 
                 {member.role && (
-                  <p className="mt-1 text-sm font-medium text-accent">
+                  <p className="mt-1 text-sm font-medium text-accent-text">
                     {member.role}
                   </p>
                 )}
