@@ -194,7 +194,8 @@ function RotatingCharger() {
             <div className="side-indicator" />
 
             <div className="side-cable-entry">
-              <span />
+              <span className="cable-entry-port" />
+              <span className="cable-entry-boot" />
             </div>
 
             <div className="side-service-door">
@@ -217,7 +218,8 @@ function RotatingCharger() {
             <div className="side-indicator" />
 
             <div className="side-cable-entry">
-              <span />
+              <span className="cable-entry-port" />
+              <span className="cable-entry-boot" />
             </div>
 
             <div className="side-service-door">
@@ -248,17 +250,59 @@ function RotatingCharger() {
           <div className="cable-arm cable-arm-left" />
           <div className="cable-arm cable-arm-right" />
 
-          {/* Two charging cables. Each is two arcs crossed at 90 degrees so
-              the cable still reads as a tube when the model turns edge-on,
-              instead of collapsing to a line. */}
-          <div className="cable-loop cable-loop-left">
-            <span className="cable-strand" />
-            <span className="cable-strand cable-strand-cross" />
+          {/* Each cable is one continuous run: cabinet outlet → overhead
+              manager → hanging loop → gun strain relief. Layered SVG strokes
+              keep the run smooth while the parent model rotates in 3D. */}
+          <svg
+            className="cable-routing cable-routing-left"
+            viewBox="0 0 86 240"
+            aria-hidden="true"
+          >
+            <path
+              className="cable-route-shadow"
+              d="M84 46 C63 48 54 22 36 18 C9 14 5 64 7 127 C8 194 28 225 69 233"
+            />
+            <path
+              className="cable-route-body"
+              d="M84 46 C63 48 54 22 36 18 C9 14 5 64 7 127 C8 194 28 225 69 233"
+            />
+            <path
+              className="cable-route-highlight"
+              d="M84 46 C63 48 54 22 36 18 C9 14 5 64 7 127 C8 194 28 225 69 233"
+            />
+          </svg>
+
+          <svg
+            className="cable-routing cable-routing-right"
+            viewBox="0 0 86 240"
+            aria-hidden="true"
+          >
+            <path
+              className="cable-route-shadow"
+              d="M2 46 C23 48 32 22 50 18 C77 14 81 64 79 127 C78 194 58 225 17 233"
+            />
+            <path
+              className="cable-route-body"
+              d="M2 46 C23 48 32 22 50 18 C77 14 81 64 79 127 C78 194 58 225 17 233"
+            />
+            <path
+              className="cable-route-highlight"
+              d="M2 46 C23 48 32 22 50 18 C77 14 81 64 79 127 C78 194 58 225 17 233"
+            />
+          </svg>
+
+          {/* The black housings and ribbed tethers are the cable-management
+              assemblies visible beneath the two white swing arms. */}
+          <div className="cable-manager cable-manager-left">
+            <span className="manager-housing" />
+            <span className="manager-tether" />
+            <span className="manager-clamp" />
           </div>
 
-          <div className="cable-loop cable-loop-right">
-            <span className="cable-strand" />
-            <span className="cable-strand cable-strand-cross" />
+          <div className="cable-manager cable-manager-right">
+            <span className="manager-housing" />
+            <span className="manager-tether" />
+            <span className="manager-clamp" />
           </div>
 
           {/* Connectors, holstered against the front face */}
@@ -892,14 +936,27 @@ export default function Home() {
           box-shadow: inset 0 0 0 2px #535955;
         }
 
-        .side-cable-entry span {
+        .cable-entry-port {
           position: absolute;
-          top: 4px;
-          left: 8px;
-          width: 9px;
-          height: 8px;
-          border-radius: 3px;
-          background: #090a09;
+          top: 3px;
+          left: 6px;
+          width: 13px;
+          height: 10px;
+          border: 2px solid #676e69;
+          border-radius: 2px;
+          background: #080a09;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .cable-entry-boot {
+          position: absolute;
+          top: 5px;
+          left: 13px;
+          width: 17px;
+          height: 7px;
+          border-radius: 1px 6px 6px 1px;
+          background: linear-gradient(#343a37, #0a0d0b 65%);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
         }
 
         .side-louvres {
@@ -981,7 +1038,21 @@ export default function Home() {
           border: 1px solid #d0d4ce;
           border-radius: 5px;
           background: linear-gradient(#f6f8f4, #c9cdc7);
-          box-shadow: 0 3px 7px rgba(0, 0, 0, 0.22);
+          box-shadow:
+            inset 0 -4px 7px rgba(76, 83, 78, 0.12),
+            0 3px 7px rgba(0, 0, 0, 0.22);
+        }
+
+        .cable-arm::before {
+          content: "";
+          position: absolute;
+          top: 2px;
+          width: 17px;
+          height: 19px;
+          border: 1px solid #afb5af;
+          border-radius: 8px;
+          background: linear-gradient(90deg, #b9beb8, #f4f6f2, #a8aea8);
+          box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
         }
 
         .cable-arm-left {
@@ -989,51 +1060,130 @@ export default function Home() {
           transform: translateZ(28px);
         }
 
+        .cable-arm-left::before {
+          right: -7px;
+        }
+
         .cable-arm-right {
           right: -76px;
           transform: translateZ(28px);
         }
 
-        /* The loop tucks under the arm (arm bottom sits at 14px) so the cable
-           reads as coming out of it rather than floating alongside. */
-        .cable-loop {
+        .cable-arm-right::before {
+          left: -7px;
+        }
+
+        .cable-routing {
           position: absolute;
-          top: 8px;
-          width: 76px;
-          height: 208px;
+          top: 14px;
+          width: 86px;
+          height: 240px;
+          overflow: visible;
+          transform: translateZ(46px);
+        }
+
+        .cable-routing-left {
+          left: -84px;
+        }
+
+        .cable-routing-right {
+          right: -84px;
+        }
+
+        .cable-routing path {
+          fill: none;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          vector-effect: non-scaling-stroke;
+        }
+
+        .cable-route-shadow {
+          stroke: rgba(0, 0, 0, 0.42);
+          stroke-width: 13px;
+          transform: translate(1.5px, 2px);
+        }
+
+        .cable-route-body {
+          stroke: #111518;
+          stroke-width: 10px;
+        }
+
+        .cable-route-highlight {
+          stroke: rgba(106, 116, 119, 0.58);
+          stroke-width: 2px;
+          transform: translate(-1.6px, -0.7px);
+        }
+
+        .cable-manager {
+          position: absolute;
+          top: 4px;
+          width: 32px;
+          height: 57px;
+          transform: translateZ(49px);
           transform-style: preserve-3d;
         }
 
-        .cable-strand {
+        .cable-manager-left {
+          left: -64px;
+        }
+
+        .cable-manager-right {
+          right: -64px;
+        }
+
+        .manager-housing {
           position: absolute;
-          inset: 0;
-          border-style: solid;
-          border-width: 9px;
+          top: 0;
+          left: 0;
+          width: 32px;
+          height: 23px;
+          clip-path: polygon(12% 0, 88% 0, 100% 38%, 75% 100%, 25% 100%, 0 38%);
+          background: linear-gradient(135deg, #525a5d, #101417 55%, #050708);
+          box-shadow:
+            inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+            0 3px 5px rgba(0, 0, 0, 0.45);
+        }
+
+        .manager-housing::after {
+          content: "";
+          position: absolute;
+          top: 5px;
+          left: 50%;
+          width: 5px;
+          height: 5px;
+          transform: translateX(-50%);
+          border: 1px solid #747c7f;
           border-radius: 50%;
-          box-shadow: inset 2px 0 3px rgba(255, 255, 255, 0.12);
+          background: #0b0e10;
         }
 
-        /* Only three sides are drawn, leaving the arc open towards the body. */
-        .cable-loop-left .cable-strand {
-          border-color: #14171a transparent #14171a #14171a;
+        .manager-tether {
+          position: absolute;
+          top: 19px;
+          left: 12px;
+          width: 8px;
+          height: 28px;
+          border-radius: 0 0 4px 4px;
+          background: repeating-linear-gradient(
+            to bottom,
+            #0a0d0f 0 3px,
+            #41484b 3px 4px
+          );
+          box-shadow:
+            inset 2px 0 2px rgba(255, 255, 255, 0.08),
+            1px 2px 3px rgba(0, 0, 0, 0.38);
         }
 
-        .cable-loop-right .cable-strand {
-          border-color: #14171a #14171a #14171a transparent;
-        }
-
-        .cable-strand-cross {
-          transform: rotateY(90deg);
-        }
-
-        .cable-loop-left {
-          left: -80px;
-          transform: translateZ(28px) rotate(-3deg);
-        }
-
-        .cable-loop-right {
-          right: -80px;
-          transform: translateZ(28px) rotate(3deg);
+        .manager-clamp {
+          position: absolute;
+          top: 43px;
+          left: 8px;
+          width: 16px;
+          height: 9px;
+          border: 1px solid #07090a;
+          border-radius: 5px;
+          background: linear-gradient(#555d60, #15191b);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
         }
 
         /* Sits at the cable's depth (28px) rather than proud of the front
@@ -1104,11 +1254,16 @@ export default function Home() {
         .connector-tail {
           position: absolute;
           top: 49px;
-          left: 7px;
-          width: 8px;
+          left: 6px;
+          width: 10px;
           height: 12px;
           border-radius: 0 0 4px 4px;
-          background: linear-gradient(90deg, #0a0c0e, #1e2225 50%, #0a0c0e);
+          background: repeating-linear-gradient(
+            to bottom,
+            #111519 0 2px,
+            #343a3d 2px 3px
+          );
+          box-shadow: inset 2px 0 2px rgba(255, 255, 255, 0.08);
         }
 
         .connector-left {
