@@ -248,18 +248,36 @@ function RotatingCharger() {
           <div className="cable-arm cable-arm-left" />
           <div className="cable-arm cable-arm-right" />
 
-          {/* Two charging cables */}
-          <div className="cable-loop cable-loop-left" />
-          <div className="cable-loop cable-loop-right" />
+          {/* Two charging cables. Each is two arcs crossed at 90 degrees so
+              the cable still reads as a tube when the model turns edge-on,
+              instead of collapsing to a line. */}
+          <div className="cable-loop cable-loop-left">
+            <span className="cable-strand" />
+            <span className="cable-strand cable-strand-cross" />
+          </div>
 
+          <div className="cable-loop cable-loop-right">
+            <span className="cable-strand" />
+            <span className="cable-strand cable-strand-cross" />
+          </div>
+
+          {/* Connectors, holstered against the front face */}
           <div className="connector connector-left">
-            <span className="connector-head" />
-            <span className="connector-handle" />
+            <span className="connector-socket" />
+            <span className="connector-shell" />
+            <span className="connector-shell connector-shell-cross" />
+            <span className="connector-collar" />
+            <span className="connector-grip" />
+            <span className="connector-tail" />
           </div>
 
           <div className="connector connector-right">
-            <span className="connector-head" />
-            <span className="connector-handle" />
+            <span className="connector-socket" />
+            <span className="connector-shell" />
+            <span className="connector-shell connector-shell-cross" />
+            <span className="connector-collar" />
+            <span className="connector-grip" />
+            <span className="connector-tail" />
           </div>
         </div>
       </div>
@@ -609,14 +627,18 @@ export default function Home() {
           height: 190px;
         }
 
+        /* top/bottom are already centred on the cap and base planes by their
+           top/bottom offsets, so they rotate in place. The translateZ these
+           previously carried pushed both faces into the middle of the body,
+           where they showed up as a horizontal bar across the charger. */
         .charger-top {
           top: -95px;
-          transform: rotateX(90deg) translateZ(-95px);
+          transform: rotateX(90deg);
         }
 
         .charger-bottom {
           bottom: -95px;
-          transform: rotateX(-90deg) translateZ(-375px);
+          transform: rotateX(-90deg);
         }
 
         .body-highlight,
@@ -972,65 +994,131 @@ export default function Home() {
           transform: translateZ(28px);
         }
 
+        /* The loop tucks under the arm (arm bottom sits at 14px) so the cable
+           reads as coming out of it rather than floating alongside. */
         .cable-loop {
           position: absolute;
-          top: 6px;
-          width: 82px;
-          height: 210px;
-          border: 8px solid #121513;
-          border-radius: 46% 46% 50% 50%;
-          box-shadow:
-            inset 2px 0 2px rgba(255, 255, 255, 0.1),
-            3px 5px 8px rgba(0, 0, 0, 0.4);
-        }
-
-        .cable-loop-left {
-          left: -82px;
-          transform: translateZ(25px) rotate(-3deg);
-        }
-
-        .cable-loop-right {
-          right: -82px;
-          transform: translateZ(25px) rotate(3deg);
-        }
-
-        .connector {
-          position: absolute;
-          top: 177px;
-          width: 21px;
-          height: 48px;
+          top: 8px;
+          width: 76px;
+          height: 208px;
           transform-style: preserve-3d;
         }
 
-        .connector-head {
+        .cable-strand {
+          position: absolute;
+          inset: 0;
+          border-style: solid;
+          border-width: 9px;
+          border-radius: 50%;
+          box-shadow: inset 2px 0 3px rgba(255, 255, 255, 0.12);
+        }
+
+        /* Only three sides are drawn, leaving the arc open towards the body. */
+        .cable-loop-left .cable-strand {
+          border-color: #14171a transparent #14171a #14171a;
+        }
+
+        .cable-loop-right .cable-strand {
+          border-color: #14171a #14171a #14171a transparent;
+        }
+
+        .cable-strand-cross {
+          transform: rotateY(90deg);
+        }
+
+        .cable-loop-left {
+          left: -80px;
+          transform: translateZ(28px) rotate(-3deg);
+        }
+
+        .cable-loop-right {
+          right: -80px;
+          transform: translateZ(28px) rotate(3deg);
+        }
+
+        /* Sits at the cable's depth (28px) rather than proud of the front
+           face, so the gun hangs beside the charger instead of appearing
+           stuck to the side panel. It clears the body horizontally, so it is
+           not hidden. */
+        .connector {
+          position: absolute;
+          top: 186px;
+          width: 22px;
+          height: 50px;
+          transform-style: preserve-3d;
+        }
+
+        /* Recessed dark holster plate the gun sits in. */
+        .connector-socket {
+          position: absolute;
+          top: -7px;
+          left: -6px;
+          width: 34px;
+          height: 34px;
+          border-radius: 5px;
+          background: linear-gradient(160deg, #3e4448, #1b1f22);
+          box-shadow:
+            inset 0 1px 2px rgba(255, 255, 255, 0.2),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+          transform: translateZ(-3px);
+        }
+
+        /* Light metallic body, black grip: the gun is pale where it plugs in
+           and dark where it is held. */
+        .connector-shell {
           position: absolute;
           top: 0;
           left: 0;
-          width: 21px;
-          height: 27px;
-          border-radius: 7px;
-          background: linear-gradient(90deg, #aaaFA9, #f6f7f4, #858b86);
-          box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.35);
+          width: 22px;
+          height: 30px;
+          border-radius: 6px 6px 3px 3px;
+          background: linear-gradient(90deg, #8f968f, #f4f6f1 44%, #838a84);
+          box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.45);
         }
 
-        .connector-handle {
+        .connector-shell-cross {
+          transform: rotateY(90deg);
+        }
+
+        .connector-collar {
           position: absolute;
-          top: 20px;
+          top: 27px;
+          left: 1px;
+          width: 20px;
+          height: 6px;
+          border-radius: 2px;
+          background: linear-gradient(90deg, #5c6360, #9aa19b 45%, #4e5451);
+        }
+
+        .connector-grip {
+          position: absolute;
+          top: 32px;
+          left: 4px;
+          width: 14px;
+          height: 20px;
+          border-radius: 3px 3px 5px 5px;
+          background: linear-gradient(90deg, #05070a, #262b2f 50%, #05070a);
+        }
+
+        /* Short stub where the cable leaves the grip. */
+        .connector-tail {
+          position: absolute;
+          top: 49px;
           left: 7px;
-          width: 9px;
-          height: 28px;
-          border-radius: 4px;
-          background: #161917;
+          width: 8px;
+          height: 12px;
+          border-radius: 0 0 4px 4px;
+          background: linear-gradient(90deg, #0a0c0e, #1e2225 50%, #0a0c0e);
         }
 
         .connector-left {
-          left: -36px;
-          transform: translateZ(62px) rotate(12deg);
+          left: -26px;
+          transform: translateZ(46px) rotate(9deg);
         }
 
         .connector-right {
-          right: -36px;
-          transform: translateZ(62px) rotate(-12deg);
+          right: -26px;
+          transform: translateZ(46px) rotate(-9deg);
         }
 
         .rotation-message {
