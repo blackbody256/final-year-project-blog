@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 
 const teamMembers = [
   {
@@ -109,6 +110,130 @@ function ChevronDownIcon() {
   );
 }
 
+type Point3D = {
+  x: number;
+  y: number;
+  z: number;
+};
+
+type CableSide = "left" | "right";
+
+const leftCableCurves: Array<{
+  points: [Point3D, Point3D, Point3D, Point3D];
+  steps: number;
+}> = [
+  {
+    points: [
+      { x: 0, y: 63, z: 43 },
+      { x: -17, y: 63, z: 43 },
+      { x: -28, y: 35, z: 38 },
+      { x: -48, y: 32, z: 36 },
+    ],
+    steps: 7,
+  },
+  {
+    points: [
+      { x: -48, y: 32, z: 36 },
+      { x: -91, y: 35, z: 49 },
+      { x: -88, y: 233, z: 72 },
+      { x: -15, y: 247, z: 46 },
+    ],
+    steps: 16,
+  },
+];
+
+function pointOnCurve(
+  [start, controlA, controlB, end]: [Point3D, Point3D, Point3D, Point3D],
+  progress: number,
+) {
+  const inverse = 1 - progress;
+  const startWeight = inverse ** 3;
+  const controlAWeight = 3 * inverse ** 2 * progress;
+  const controlBWeight = 3 * inverse * progress ** 2;
+  const endWeight = progress ** 3;
+
+  return {
+    x:
+      startWeight * start.x +
+      controlAWeight * controlA.x +
+      controlBWeight * controlB.x +
+      endWeight * end.x,
+    y:
+      startWeight * start.y +
+      controlAWeight * controlA.y +
+      controlBWeight * controlB.y +
+      endWeight * end.y,
+    z:
+      startWeight * start.z +
+      controlAWeight * controlA.z +
+      controlBWeight * controlB.z +
+      endWeight * end.z,
+  };
+}
+
+function getCablePoints(side: CableSide) {
+  const points = leftCableCurves.flatMap((curve, curveIndex) =>
+    Array.from({ length: curve.steps + 1 }, (_, stepIndex) =>
+      pointOnCurve(curve.points, stepIndex / curve.steps),
+    ).slice(curveIndex === 0 ? 0 : 1),
+  );
+
+  if (side === "left") return points;
+
+  return points.map((point) => ({
+    ...point,
+    x: 190 - point.x,
+  }));
+}
+
+function CableTube({ side }: { side: CableSide }) {
+  const points = getCablePoints(side);
+
+  return (
+    <div className={`charging-cable charging-cable-${side}`} aria-hidden="true">
+      {points.slice(0, -1).map((point, index) => {
+        const nextPoint = points[index + 1];
+        const deltaX = nextPoint.x - point.x;
+        const deltaY = nextPoint.y - point.y;
+        const deltaZ = nextPoint.z - point.z;
+        const length = Math.hypot(deltaX, deltaY, deltaZ);
+        const angle =
+          (Math.acos(Math.max(-1, Math.min(1, deltaX / length))) * 180) /
+          Math.PI;
+
+        const style = {
+          width: `${length + 1}px`,
+          transform: `translate3d(${point.x}px, ${point.y - 5}px, ${point.z}px) rotate3d(0, ${-deltaZ}, ${deltaY}, ${angle}deg)`,
+        } satisfies CSSProperties;
+
+        return (
+          <span className="cable-tube-segment" style={style} key={index}>
+            {Array.from({ length: 6 }, (_, faceIndex) => (
+              <i
+                className="cable-tube-face"
+                style={
+                  {
+                    "--cable-face-angle": `${faceIndex * 60}deg`,
+                  } as CSSProperties
+                }
+                key={faceIndex}
+              />
+            ))}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function ScreenConnectorIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M5 2.5h6v4.2l-1.3 1.2v2.6H6.3V7.9L5 6.7V2.5Zm2-1v2m2-2v2m-1 7v3" />
+    </svg>
+  );
+}
+
 function RotatingCharger() {
   const vents = Array.from({ length: 30 });
 
@@ -130,8 +255,22 @@ function RotatingCharger() {
 
             <div className="charger-screen">
               <div className="screen-content">
-                <strong>KMC</strong>
-                <span>DC CHARGER</span>
+                <div className="screen-header">
+                  <strong>KMC</strong>
+                  <span><i />Online</span>
+                </div>
+                <span className="screen-ready">Ready to charge</span>
+                <span className="screen-instruction">Choose connector</span>
+                <div className="screen-ports">
+                  <span className="screen-port">
+                    <ScreenConnectorIcon />
+                    <b>1</b>
+                  </span>
+                  <span className="screen-port">
+                    <ScreenConnectorIcon />
+                    <b>2</b>
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -250,46 +389,10 @@ function RotatingCharger() {
           <div className="cable-arm cable-arm-left" />
           <div className="cable-arm cable-arm-right" />
 
-          {/* Each cable is one continuous run: cabinet outlet → overhead
-              manager → hanging loop → gun strain relief. Layered SVG strokes
-              keep the run smooth while the parent model rotates in 3D. */}
-          <svg
-            className="cable-routing cable-routing-left"
-            viewBox="0 0 86 240"
-            aria-hidden="true"
-          >
-            <path
-              className="cable-route-shadow"
-              d="M84 46 C63 48 54 22 36 18 C9 14 5 64 7 127 C8 194 28 225 69 233"
-            />
-            <path
-              className="cable-route-body"
-              d="M84 46 C63 48 54 22 36 18 C9 14 5 64 7 127 C8 194 28 225 69 233"
-            />
-            <path
-              className="cable-route-highlight"
-              d="M84 46 C63 48 54 22 36 18 C9 14 5 64 7 127 C8 194 28 225 69 233"
-            />
-          </svg>
-
-          <svg
-            className="cable-routing cable-routing-right"
-            viewBox="0 0 86 240"
-            aria-hidden="true"
-          >
-            <path
-              className="cable-route-shadow"
-              d="M2 46 C23 48 32 22 50 18 C77 14 81 64 79 127 C78 194 58 225 17 233"
-            />
-            <path
-              className="cable-route-body"
-              d="M2 46 C23 48 32 22 50 18 C77 14 81 64 79 127 C78 194 58 225 17 233"
-            />
-            <path
-              className="cable-route-highlight"
-              d="M2 46 C23 48 32 22 50 18 C77 14 81 64 79 127 C78 194 58 225 17 233"
-            />
-          </svg>
+          {/* Each cable is sampled along a spatial curve and built from
+              hexagonal tube segments, so it retains volume at every angle. */}
+          <CableTube side="left" />
+          <CableTube side="right" />
 
           {/* The black housings and ribbed tethers are the cable-management
               assemblies visible beneath the two white swing arms. */}
@@ -710,39 +813,142 @@ export default function Home() {
 
         .charger-screen {
           position: absolute;
-          top: 53px;
+          top: 45px;
           left: 50%;
-          width: 66px;
-          height: 66px;
-          padding: 5px;
+          width: 78px;
+          height: 78px;
+          padding: 6px;
           transform: translateX(-50%);
-          border: 6px solid #d1d4ce;
+          border: 5px solid #c5cac5;
           border-radius: 50%;
           background: #ffffff;
           box-shadow:
-            inset 0 0 8px rgba(0, 0, 0, 0.15),
-            0 3px 8px rgba(0, 0, 0, 0.16);
+            inset 0 0 0 1px #858c87,
+            inset 0 0 8px rgba(0, 0, 0, 0.18),
+            0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .charger-screen::before {
+          content: "";
+          position: absolute;
+          inset: -4px;
+          border: 2px solid rgba(98, 203, 230, 0.5);
+          border-radius: 50%;
+          box-shadow: 0 0 7px rgba(98, 203, 230, 0.28);
         }
 
         .screen-content {
           display: flex;
           height: 100%;
+          padding: 5px 6px;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-start;
           border-radius: 50%;
-          background: #e8f7e2;
-          color: #174d36;
+          background:
+            radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.95), transparent 58%),
+            linear-gradient(#eaf8f4, #d7eee9);
+          color: #123d42;
+          box-shadow: inset 0 0 5px rgba(28, 88, 94, 0.16);
+          overflow: hidden;
         }
 
-        .screen-content strong {
-          font-size: 9px;
+        .screen-header {
+          display: flex;
+          width: 100%;
+          align-items: center;
+          justify-content: space-between;
         }
 
-        .screen-content span {
+        .screen-header strong {
+          color: #d72a31;
+          font-size: 6px;
+          font-weight: 900;
+          letter-spacing: -0.08em;
+          transform: skewX(-8deg);
+        }
+
+        .screen-header span {
+          display: flex;
+          align-items: center;
+          gap: 1.5px;
+          color: #367076;
+          font-size: 3px;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+
+        .screen-header i {
+          width: 2.5px;
+          height: 2.5px;
+          border-radius: 50%;
+          background: #42a35c;
+          box-shadow: 0 0 2px rgba(66, 163, 92, 0.8);
+        }
+
+        .screen-ready {
           margin-top: 2px;
-          font-size: 4px;
-          font-weight: 700;
+          color: #163d43;
+          font-size: 4.5px;
+          font-weight: 900;
+          letter-spacing: 0.055em;
+          line-height: 1;
+          text-transform: uppercase;
+        }
+
+        .screen-instruction {
+          margin-top: 1px;
+          color: #5c797b;
+          font-size: 3px;
+          font-weight: 600;
+          line-height: 1;
+        }
+
+        .screen-ports {
+          display: flex;
+          margin-top: 3px;
+          gap: 5px;
+        }
+
+        .screen-port {
+          position: relative;
+          display: grid;
+          width: 17px;
+          height: 17px;
+          place-items: center;
+          border: 1px solid #8cb5b8;
+          border-radius: 50%;
+          background: linear-gradient(#f7ffff, #bfe2df);
+          box-shadow:
+            inset 0 1px 1px rgba(255, 255, 255, 0.9),
+            0 1px 2px rgba(28, 86, 91, 0.2);
+          color: #245f67;
+        }
+
+        .screen-port svg {
+          width: 9px;
+          height: 9px;
+          fill: none;
+          stroke: currentColor;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-width: 1.4;
+        }
+
+        .screen-port b {
+          position: absolute;
+          right: -1px;
+          bottom: -1px;
+          display: grid;
+          width: 6px;
+          height: 6px;
+          place-items: center;
+          border-radius: 50%;
+          background: #245f67;
+          color: white;
+          font-size: 3px;
+          line-height: 1;
         }
 
         .charger-controls {
@@ -1073,45 +1279,48 @@ export default function Home() {
           left: -7px;
         }
 
-        .cable-routing {
+        .charging-cable {
           position: absolute;
-          top: 14px;
-          width: 86px;
-          height: 240px;
-          overflow: visible;
-          transform: translateZ(46px);
+          inset: 0;
+          pointer-events: none;
+          transform-style: preserve-3d;
         }
 
-        .cable-routing-left {
-          left: -84px;
+        .cable-tube-segment {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          height: 10px;
+          transform-origin: 0 50%;
+          transform-style: preserve-3d;
         }
 
-        .cable-routing-right {
-          right: -84px;
+        .cable-tube-face {
+          position: absolute;
+          top: 2.5px;
+          left: 0;
+          display: block;
+          width: 100%;
+          height: 5px;
+          border-radius: 2.5px;
+          background: linear-gradient(
+            to bottom,
+            #42494d,
+            #171b1e 48%,
+            #07090b
+          );
+          transform: rotateX(var(--cable-face-angle)) translateZ(4.35px);
+          box-shadow: inset 0 0.7px rgba(255, 255, 255, 0.1);
         }
 
-        .cable-routing path {
-          fill: none;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-          vector-effect: non-scaling-stroke;
-        }
-
-        .cable-route-shadow {
-          stroke: rgba(0, 0, 0, 0.42);
-          stroke-width: 13px;
-          transform: translate(1.5px, 2px);
-        }
-
-        .cable-route-body {
-          stroke: #111518;
-          stroke-width: 10px;
-        }
-
-        .cable-route-highlight {
-          stroke: rgba(106, 116, 119, 0.58);
-          stroke-width: 2px;
-          transform: translate(-1.6px, -0.7px);
+        .cable-tube-face:nth-child(even) {
+          background: linear-gradient(
+            to bottom,
+            #242a2d,
+            #0b0e10 58%,
+            #030405
+          );
         }
 
         .cable-manager {
