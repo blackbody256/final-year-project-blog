@@ -1,6 +1,6 @@
-import {
-  ProgressEntry as ProgressEntryType,
-} from "@/data/progress";
+import Link from "next/link";
+import { Images } from "lucide-react";
+import { ProgressEntry as ProgressEntryType } from "@/data/progress";
 import TeamMemberBadge from "./TeamMemberBadge";
 
 type ProgressEntryProps = {
@@ -75,6 +75,16 @@ export default function ProgressEntry({
           <p className="mt-4 text-base leading-7 text-muted md:text-lg md:leading-8">
             {entry.description}
           </p>
+
+          {entry.gallerySlug && (
+            <Link
+              href={`/gallery#${entry.gallerySlug}`}
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/5 px-4 py-2.5 text-sm font-semibold text-primary transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              <Images className="h-4 w-4" aria-hidden="true" />
+              View field photos
+            </Link>
+          )}
 
           {/* Contributors */}
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">

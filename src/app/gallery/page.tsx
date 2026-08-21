@@ -5,7 +5,7 @@ import { galleryCollections } from "@/data/gallery";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Field photographs of electric-bus charging infrastructure at Kiira Motors Corporation: commissioning, maintenance and fault diagnosis.",
+    "Project progress in photographs from Kiira Motors Corporation.",
 };
 
 export default function GalleryPage() {
@@ -18,15 +18,14 @@ export default function GalleryPage() {
       </noscript>
 
       <div className="mx-auto max-w-7xl">
-        <p className="font-medium text-accent-text">Field work</p>
+        <p className="font-medium text-accent-text">Progress in pictures</p>
 
-        <h1 className="mt-2 text-4xl font-bold text-primary">Gallery</h1>
+        <h1 className="mt-2 text-4xl font-bold text-primary">
+          Project gallery
+        </h1>
 
-        <p className="mt-4 max-w-3xl leading-7 text-muted">
-          Photographs from the charging infrastructure this project is built
-          around, taken at Kiira Motors Corporation. Each set documents one
-          piece of work: what the hardware is, what was done to it, and why it
-          matters to the problem we are solving.
+        <p className="mt-4 max-w-xl leading-7 text-muted">
+          Field photos arranged in the order our project developed.
         </p>
 
         {/* Jump links */}
@@ -38,7 +37,7 @@ export default function GalleryPage() {
                   href={`#${collection.slug}`}
                   className="inline-block rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent-text"
                 >
-                  {collection.title}
+                  {collection.eyebrow}
                 </a>
               </li>
             ))}

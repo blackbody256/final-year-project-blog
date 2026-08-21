@@ -6,6 +6,7 @@ export type ProgressEntry = {
   title: string;
   description: string;
   members: TeamMember[];
+  gallerySlug?: string;
 };
 
 export const memberColors: Record<TeamMember, string> = {
@@ -23,6 +24,7 @@ export const progressEntries: ProgressEntry[] = [
     description:
       "One of the members in the team identified a key challenge in diagnosing EV fast charger failures during her internship at Kiira Vehicle Plant in Jinja.",
     members: ["Treasure"],
+    gallerySlug: "problem-identification",
   },
 
   {
